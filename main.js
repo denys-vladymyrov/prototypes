@@ -57,14 +57,16 @@
 
   };
 
+  Student.prototype.averageMark = function () {
+    return this.marks.map((item, i, arr) => item / arr.length).reduce((p, c) => c + p);
+  };
+
   Student.prototype.summary = function(){
 
     var averageRating,
-        averageAttendance,
         averageAttendance;
 
-    averageRating = this.marks.map((item, i, arr) => item / arr.length).reduce((p, c) => c + p);
-
+    averageRating = this.averageMark();
     averageAttendance = this.averageAttendance();
     
 
@@ -107,6 +109,8 @@
   studentVasya.marks.push(100);
   studentVasya.present();
   studentVasya.present();
+  studentVasya.absent();
+
 
   console.log(studentVasya.summary());
   
@@ -121,12 +125,48 @@
 
   StudentArray.prototype.attendance = function (lastname) {
     if(lastname){
-
+      this.studentsArray.forEach(function (item, i) {
+        if(item.lastname === lastname){
+          console.log(lastname + " : " + item.averageAttendance());
+        }
+      });
     }
     else{
-
+      var averageGroupAttendance = 0;
+      this.studentsArray.forEach(function (item, i) {
+        averageGroupAttendance += item.averageAttendance();
+      });
+      console.log("Average attendance: " + averageGroupAttendance / this.studentsArray.length);
     }
   };
+
+  StudentArray.prototype.performance = function (lastname) {
+    if(lastname){
+      this.studentsArray.forEach(function (item, i) {
+        if(item.lastname === lastname){
+          console.log(lastname + " : " + item.averageMark());
+        }
+      });
+    }
+    else{
+      var averageGroupMark = 0;
+      this.studentsArray.forEach(function (item, i) {
+        averageGroupMark += item.averageMark();
+      });
+      console.log("Average mark: " + averageGroupMark / this.studentsArray.length);
+    }
+  };
+
+  var group = new StudentArray();
+  group.push(studentVasya);
+  group.push(studentDenys);
+  group.attendance();
+  group.attendance("Vladymyrov");
+  group.attendance("Petrov");
+
+  group.performance();
+  group.performance("Vladymyrov");
+  group.performance("Petrov");
 
 }());
 
