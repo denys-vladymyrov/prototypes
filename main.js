@@ -40,14 +40,9 @@
 
   };
 
-  Student.prototype.summary = function(){
-
+  Student.prototype.averageAttendance = function () {
     var totalAttendance = 0,
-        totalLessons = 0,
-        averageRating,
-        averageAttendance;
-
-    averageRating = this.marks.map((item, i, arr) => item / arr.length).reduce((p, c) => c + p);
+        totalLessons = 0;
 
     this.attendance.forEach(function(item, i){
       if(item === true){
@@ -58,7 +53,20 @@
       }
     });
 
-    averageAttendance = totalAttendance / totalLessons;
+    return totalAttendance / totalLessons;
+
+  };
+
+  Student.prototype.summary = function(){
+
+    var averageRating,
+        averageAttendance,
+        averageAttendance;
+
+    averageRating = this.marks.map((item, i, arr) => item / arr.length).reduce((p, c) => c + p);
+
+    averageAttendance = this.averageAttendance();
+    
 
     if(averageRating > 90 && averageAttendance > 0.9){
       return "Ути какой молодчинка!";
@@ -72,8 +80,7 @@
 
   };
 
-
-
+  
   var studentDenys = new Student("Denys", "Vladymyrov", 1981);
   studentDenys.marks.push(80);
   studentDenys.marks.push(80);
@@ -98,11 +105,28 @@
   studentVasya.marks.push(100);
   studentVasya.marks.push(95);
   studentVasya.marks.push(100);
-
   studentVasya.present();
   studentVasya.present();
 
   console.log(studentVasya.summary());
+  
+  
+  function StudentArray() {
+    this.studentsArray = [];
+  }
+
+  StudentArray.prototype.push = function(student){
+    this.studentsArray.push(student);
+  };
+
+  StudentArray.prototype.attendance = function (lastname) {
+    if(lastname){
+
+    }
+    else{
+
+    }
+  };
 
 }());
 
